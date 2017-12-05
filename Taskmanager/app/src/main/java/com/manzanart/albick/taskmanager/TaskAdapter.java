@@ -26,7 +26,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             if(convertView == null){
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.task,parent, false);
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_task,parent, false);
             }
 
             TaskViewHolder viewHolder = (TaskViewHolder) convertView.getTag();
@@ -34,8 +34,8 @@ public class TaskAdapter extends ArrayAdapter<Task> {
             if(viewHolder == null){
                 viewHolder = new TaskViewHolder();
 
-                viewHolder.text = (TextView) convertView.findViewById(R.id.text);
-                viewHolder.image = (ImageView) convertView.findViewById(R.id.image);
+                viewHolder.text = (TextView) convertView.findViewById(R.id.task_name);
+                //viewHolder.image = (ImageView) convertView.findViewById(R.id.image);
                 convertView.setTag(viewHolder);
             }
 
@@ -45,7 +45,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
             //il ne reste plus qu'à remplir notre vue
 
             viewHolder.text.setText(task.getName());
-            viewHolder.image.setImageDrawable(new ColorDrawable(task.getColor()));
+            //viewHolder.image.setImageDrawable(new ColorDrawable(task.getColor()));
 
             return convertView;
         }
