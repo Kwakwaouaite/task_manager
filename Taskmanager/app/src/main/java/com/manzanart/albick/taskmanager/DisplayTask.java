@@ -3,6 +3,7 @@ package com.manzanart.albick.taskmanager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,14 +13,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class DisplayTask extends AppCompatActivity {
 
     private ListView mListView;
+    private ArrayList<Task> tasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +31,14 @@ public class DisplayTask extends AppCompatActivity {
         setContentView(R.layout.content_display_task);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
+        genererTasks();
+        Intent intent = getIntent();
+        if(intent != null) {
+            String name = intent.getStringExtra("name");
+            String date = intent.getStringExtra("date");
+            Toast.makeText(getApplicationContext(),name,Toast.LENGTH_LONG).show();
+         //   tasks.add(new Task(new ArrayList<Task>(),name,Calendar.getInstance().getTime(),new Date(date),Color.BLUE));
+        }
        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.add_button);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,7 +49,7 @@ public class DisplayTask extends AppCompatActivity {
         });
         mListView = (ListView) findViewById(R.id.list);
 
-        List<Task> tasks = genererTasks();
+
 
         TaskAdapter adapter = new TaskAdapter(DisplayTask.this, tasks);
         mListView.setAdapter(adapter);
@@ -70,10 +79,9 @@ public class DisplayTask extends AppCompatActivity {
 
 
 
-    private List<Task> genererTasks(){
-        List<Task> tasks = new ArrayList<Task>();
+    private void genererTasks(){
         tasks.add(new Task(new ArrayList<Task>(),"Get the F up", Calendar.getInstance().getTime(),Calendar.getInstance().getTime(), Color.BLUE));
         tasks.add(new Task(new ArrayList<Task>(),"Finish dat project", Calendar.getInstance().getTime(),Calendar.getInstance().getTime(), Color.BLUE));
-        return tasks;
+
     }
 }
