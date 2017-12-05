@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -50,9 +51,31 @@ public class DisplayTask extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.list);
 
 
-
         TaskAdapter adapter = new TaskAdapter(DisplayTask.this, tasks);
         mListView.setAdapter(adapter);
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                // ListView Clicked item index
+                //int itemPosition     = position;
+
+                // ListView Clicked item value
+                //String  itemValue    = (String) mListView.getItemAtPosition(position);
+
+                String taskTitle = (String) tasks.get((int) id).getName();
+
+                // Show Alert
+                Toast.makeText(getApplicationContext(),
+                        "Position :"+ id +"  ListItem : " + taskTitle , Toast.LENGTH_LONG)
+                        .show();
+
+            }
+
+        });
     }
 
     @Override
@@ -80,6 +103,7 @@ public class DisplayTask extends AppCompatActivity {
 
 
     private void genererTasks(){
+        tasks=new ArrayList<Task>();
         tasks.add(new Task(new ArrayList<Task>(),"Get the F up", Calendar.getInstance().getTime(),Calendar.getInstance().getTime(), Color.BLUE));
         tasks.add(new Task(new ArrayList<Task>(),"Finish dat project", Calendar.getInstance().getTime(),Calendar.getInstance().getTime(), Color.BLUE));
 
