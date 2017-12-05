@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mListView = (ListView) findViewById(R.id.listView);
+        setContentView(R.layout.content_display_task);
+        mListView = (ListView) findViewById(R.id.list);
 
         List<Task> tasks = genererTasks();
 
