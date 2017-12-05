@@ -10,8 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,10 +42,33 @@ public class DisplayTask extends AppCompatActivity {
         });
         mListView = (ListView) findViewById(R.id.list);
 
-        List<Task> tasks = genererTasks();
+        final List<Task> tasks = genererTasks();
 
         TaskAdapter adapter = new TaskAdapter(DisplayTask.this, tasks);
         mListView.setAdapter(adapter);
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                // ListView Clicked item index
+                //int itemPosition     = position;
+
+                // ListView Clicked item value
+                //String  itemValue    = (String) mListView.getItemAtPosition(position);
+
+                String taskTitle = (String) tasks.get((int) id).getName();
+
+                // Show Alert
+                Toast.makeText(getApplicationContext(),
+                        "Position :"+ id +"  ListItem : " + taskTitle , Toast.LENGTH_LONG)
+                        .show();
+
+            }
+
+        });
     }
 
     @Override
