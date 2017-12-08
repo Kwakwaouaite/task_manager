@@ -51,7 +51,7 @@ public class DisplayTask extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.list);
 
 
-        TaskAdapter adapter = new TaskAdapter(DisplayTask.this, tasks);
+        final TaskAdapter adapter = new TaskAdapter(DisplayTask.this, tasks);
         mListView.setAdapter(adapter);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,6 +67,15 @@ public class DisplayTask extends AppCompatActivity {
                 //String  itemValue    = (String) mListView.getItemAtPosition(position);
 
                 String taskTitle = (String) tasks.get((int) id).getName();
+                
+
+                //
+                if (tasks.get((int) id).getDescription() == null) {
+                    tasks.get((int) id).setDescription("Descriptionaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                }
+                else{
+                tasks.get((int) id).setDescription(null);}
+                adapter.notifyDataSetChanged();
 
                 // Show Alert
                 Toast.makeText(getApplicationContext(),
@@ -104,8 +113,8 @@ public class DisplayTask extends AppCompatActivity {
 
     private void genererTasks(){
         tasks=new ArrayList<Task>();
-        tasks.add(new Task(new ArrayList<Task>(),"Get the F up", Calendar.getInstance().getTime(),Calendar.getInstance().getTime(), Color.BLUE));
-        tasks.add(new Task(new ArrayList<Task>(),"Finish dat project", Calendar.getInstance().getTime(),Calendar.getInstance().getTime(), Color.BLUE));
+        tasks.add(new Task(new ArrayList<Task>(),"Get the F up", null, Calendar.getInstance().getTime(),Calendar.getInstance().getTime(), Color.BLUE));
+        tasks.add(new Task(new ArrayList<Task>(),"Finish dat project", "", Calendar.getInstance().getTime(),Calendar.getInstance().getTime(), Color.BLUE));
 
     }
 }

@@ -10,13 +10,13 @@ import java.util.Date;
  */
 
 public class Task {
-    public Task(ArrayList<Task> subTasks, String name, Date startingDate, Date endingDate, int color) {
+    public Task(ArrayList<Task> subTasks, String name,String description, Date startingDate, Date endingDate, int color) {
         this.subTasks = subTasks;
         this.name = name;
         this.startingDate = startingDate;
         this.endingDate = endingDate;
         this.color= color;
-
+        this.description = description;
     }
 
     public ArrayList<Task> getSubTasks() {
@@ -52,11 +52,16 @@ public class Task {
         this.endingDate = endingDate;
     }
 
+    public void setDescription(String description) { this.description = description; }
+
+    public String getDescription() { return description; }
+
     private ArrayList<Task> subTasks;
     private String name;
     private Date startingDate;
     private Date endingDate;
     private int color;
+    private String description;
 
 
     public int getColor() {

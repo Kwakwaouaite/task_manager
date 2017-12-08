@@ -35,6 +35,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
                 viewHolder = new TaskViewHolder();
 
                 viewHolder.text = (TextView) convertView.findViewById(R.id.task_name);
+                viewHolder.description = convertView.findViewById(R.id.description);
                 //viewHolder.image = (ImageView) convertView.findViewById(R.id.image);
                 convertView.setTag(viewHolder);
             }
@@ -45,6 +46,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
             //il ne reste plus qu'à remplir notre vue
 
             viewHolder.text.setText(task.getName());
+            viewHolder.description.setText(task.getDescription());
             //viewHolder.image.setImageDrawable(new ColorDrawable(task.getColor()));
 
             return convertView;
@@ -54,6 +56,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
 
             public TextView text;
             public ImageView image;
+            public TextView description;
         }
     }
 
