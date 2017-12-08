@@ -10,6 +10,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -40,7 +42,8 @@ import java.util.List;
 
                     Bundle bundle = new Bundle();
                     bundle.putString("nameTask", nameTask.getText().toString());
-                    bundle.putString("date", date.toString());
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    bundle.putSerializable("date", formatter.format(date));
 
                     intent.putExtras(bundle);
                     startActivity(intent);

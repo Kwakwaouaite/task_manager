@@ -21,6 +21,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -44,8 +47,19 @@ public class DisplayTask extends AppCompatActivity {
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
                 String name = intent.getStringExtra("nameTask");
-                String date = intent.getStringExtra("date");
-                tasks.add(new Task(new ArrayList<Task>(),name,Calendar.getInstance().getTime(),Calendar.getInstance().getTime(),Color.BLUE));
+                String dateStr = intent.getStringExtra("date");
+                Date date=null;
+
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                try {
+                    date = format.parse(dateStr);
+                    System.out.println(date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+                tasks.add(new Task(new ArrayList<Task>(),name,Calendar.getInstance().getTime(),date,Color.BLUE));
                 Save();
             }
         }
