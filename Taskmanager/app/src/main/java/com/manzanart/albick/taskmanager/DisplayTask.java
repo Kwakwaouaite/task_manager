@@ -43,6 +43,7 @@ public class DisplayTask extends AppCompatActivity {
 
         genererTasks();
         Read();
+        NotificationEventReceiver.setupAlarm(getApplicationContext());
         Intent intent = getIntent();
         if(intent != null) {
             Bundle extras = getIntent().getExtras();
