@@ -10,6 +10,7 @@ import java.util.Date;
  * Created by RoxasIsPoor on 04/12/2017.
  */
 
+
 public class Task implements  Serializable{
     public Task(ArrayList<Task> subTasks, String name,String description, Date startingDate, Date endingDate, int color) {
 
@@ -18,6 +19,7 @@ public class Task implements  Serializable{
         this.startingDate = startingDate;
         this.endingDate = endingDate;
         this.color= color;
+
         this.description = description;
     }
 
@@ -63,8 +65,10 @@ public class Task implements  Serializable{
     private Date startingDate;
     private Date endingDate;
     private int color;
+
     private String description;
 
+    private ArrayList<NotififRules> rules;
 
     public int getColor() {
         return color;

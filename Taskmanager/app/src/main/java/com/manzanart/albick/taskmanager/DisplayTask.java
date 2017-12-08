@@ -40,6 +40,7 @@ public class DisplayTask extends AppCompatActivity {
         setContentView(R.layout.content_display_task);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         genererTasks();
         Read();
         Intent intent = getIntent();
@@ -59,7 +60,7 @@ public class DisplayTask extends AppCompatActivity {
                 }
 
 
-                tasks.add(new Task(new ArrayList<Task>(),name,Calendar.getInstance().getTime(),date,Color.BLUE));
+                tasks.add(new Task(new ArrayList<Task>(),name,null,Calendar.getInstance().getTime(),date,Color.BLUE));
                 Save();
             }
         }
@@ -110,6 +111,7 @@ public class DisplayTask extends AppCompatActivity {
 
         });
     }
+
 public void Save()
 {
     try {
