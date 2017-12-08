@@ -33,6 +33,7 @@ import java.util.List;
             Button button = (Button) findViewById(R.id.submit);
             final EditText nameTask   = (EditText)findViewById(R.id.editText);
             final Date date = getDateFromDatePicker((DatePicker)findViewById(R.id.datePicker));
+            final EditText descriptionTask = (EditText)findViewById(R.id.editDescription);
 
 
             button.setOnClickListener(new View.OnClickListener() {
@@ -42,6 +43,7 @@ import java.util.List;
 
                     Bundle bundle = new Bundle();
                     bundle.putString("nameTask", nameTask.getText().toString());
+                    bundle.putString("descriptionTask", descriptionTask.getText().toString());
                     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     bundle.putSerializable("date", formatter.format(date));
 

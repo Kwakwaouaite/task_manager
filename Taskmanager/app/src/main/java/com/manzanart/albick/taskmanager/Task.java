@@ -21,6 +21,7 @@ public class Task implements  Serializable{
         this.color= color;
 
         this.description = description;
+        this.displayed=false;
     }
 
     public ArrayList<Task> getSubTasks() {
@@ -58,6 +59,13 @@ public class Task implements  Serializable{
 
     public void setDescription(String description) { this.description = description; }
 
+    public boolean isDisplayed(){return this.displayed;}
+
+    public void switchDisplay(){
+        if (this.displayed) { this.displayed = false;}
+        else {this.displayed = true;}
+    }
+
     public String getDescription() { return description; }
 
     private ArrayList<Task> subTasks;
@@ -67,6 +75,8 @@ public class Task implements  Serializable{
     private int color;
 
     private String description;
+    private boolean displayed;
+
 
     private ArrayList<NotififRules> rules;
 
