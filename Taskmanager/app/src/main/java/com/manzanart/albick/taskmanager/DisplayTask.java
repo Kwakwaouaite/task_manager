@@ -9,12 +9,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.FileInputStream;
@@ -47,6 +50,7 @@ public class DisplayTask extends AppCompatActivity {
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
                 String name = intent.getStringExtra("nameTask");
+                String description = intent.getStringExtra("descriptionTask");
                 String dateStr = intent.getStringExtra("date");
                 Date date=null;
 
@@ -59,7 +63,7 @@ public class DisplayTask extends AppCompatActivity {
                 }
 
 
-                tasks.add(new Task(new ArrayList<Task>(),name,Calendar.getInstance().getTime(),date,Color.BLUE));
+                tasks.add(new Task(new ArrayList<Task>(),name,description,Calendar.getInstance().getTime(),date,Color.BLUE));
                 Save();
             }
         }
@@ -90,20 +94,32 @@ public class DisplayTask extends AppCompatActivity {
                 // ListView Clicked item value
                 //String  itemValue    = (String) mListView.getItemAtPosition(position);
 
-                String taskTitle = (String) tasks.get((int) id).getName();
+                Task task = tasks.get((int) id);
+                task.switchDisplay();
+
+                String taskTitle = (String) task.getName();
                 
+                ViewGroup test = (ViewGroup) view;
+
+                /*
+                int b = test.getChildCount();
+                TextView desc = (TextView) test.getChildAt(1);
+
+                desc.setText("YO !");*/
+
+
 
                 //
-                if (tasks.get((int) id).getDescription() == null) {
+                /*if (tasks.get((int) id).getDescription() == null) {
                     tasks.get((int) id).setDescription("Descriptionaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                 }
                 else{
-                tasks.get((int) id).setDescription(null);}
+                tasks.get((int) id).setDescription(null);}*/
                 adapter.notifyDataSetChanged();
 
                 // Show Alert
                 Toast.makeText(getApplicationContext(),
-                        "Position :"+ id +"  ListItem : " + taskTitle , Toast.LENGTH_LONG)
+                        "Position :"+ id +"  ListItem : " + task.isDisplayed()  , Toast.LENGTH_LONG)
                         .show();
 
             }
@@ -161,9 +177,8 @@ catch (Exception e){
 
     private void genererTasks(){
         tasks=new ArrayList<Task>();
-        tasks.add(new Task(new ArrayList<Task>(),"Get the F up", null, Calendar.getInstance().getTime(),Calendar.getInstance().getTime(), Color.BLUE));
+        tasks.add(new Task(new ArrayList<Task>(),"Get the F up", "aaaa", Calendar.getInstance().getTime(),Calendar.getInstance().getTime(), Color.BLUE));
         tasks.add(new Task(new ArrayList<Task>(),"Finish dat project", "", Calendar.getInstance().getTime(),Calendar.getInstance().getTime(), Color.BLUE));
-
     }
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {

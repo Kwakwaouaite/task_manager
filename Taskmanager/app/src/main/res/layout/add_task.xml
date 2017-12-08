@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TextView
@@ -13,11 +14,18 @@
         android:textSize="30dp" />
 
     <EditText
+        android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Name"
         android:layout_below="@id/title_newTask"
-        android:id="@+id/editText" />
+        android:text="Name" />
+
+    <EditText
+        android:id="@+id/editDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editText"
+        android:text="Description"/>
 
     <Button
         android:id="@+id/submit"
@@ -32,7 +40,7 @@
         android:id="@+id/datePicker"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/editDescription"
         android:layout_centerHorizontal="true" />
 
 

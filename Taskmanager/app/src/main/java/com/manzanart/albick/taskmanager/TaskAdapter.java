@@ -2,6 +2,7 @@ package com.manzanart.albick.taskmanager;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,12 @@ public class TaskAdapter extends ArrayAdapter<Task> {
             //il ne reste plus qu'à remplir notre vue
 
             viewHolder.text.setText(task.getName());
-            viewHolder.description.setText(task.getDescription());
+
+            if (task.isDisplayed()) {
+                viewHolder.description.setText( task.getDescription());
+            }
+            else {
+                viewHolder.description.setText(null);}
             //viewHolder.image.setImageDrawable(new ColorDrawable(task.getColor()));
 
             return convertView;
