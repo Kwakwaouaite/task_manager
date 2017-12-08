@@ -2,6 +2,7 @@ package com.manzanart.albick.taskmanager;
 
 import android.graphics.Color;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -9,7 +10,7 @@ import java.util.Date;
  * Created by RoxasIsPoor on 04/12/2017.
  */
 
-public class Task {
+public class Task implements Serializable {
     public Task(ArrayList<Task> subTasks, String name, Date startingDate, Date endingDate, int color) {
         this.subTasks = subTasks;
         this.name = name;

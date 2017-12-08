@@ -29,17 +29,22 @@ import java.util.List;
             super.onCreate(savedInstanceState);
             setContentView(R.layout.add_task);
             Button button = (Button) findViewById(R.id.submit);
-            final EditText name   = (EditText)findViewById(R.id.editText);
+            final EditText nameTask   = (EditText)findViewById(R.id.editText);
             final Date date = getDateFromDatePicker((DatePicker)findViewById(R.id.datePicker));
 
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(view.getContext(), DisplayTask.class);
-                    i.putExtra("name", name.getText());
-                    i.putExtra("date", date);
-                    startActivity(i);
+                    Intent intent = new Intent(view.getContext(), DisplayTask.class);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("nameTask", nameTask.getText().toString());
+                    bundle.putString("date", date.toString());
+
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+
                 }
             });
              }
