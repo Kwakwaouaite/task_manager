@@ -1,5 +1,6 @@
 package com.manzanart.albick.taskmanager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,6 +17,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -33,17 +41,33 @@ public class DisplayTask extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         genererTasks();
+        Read();
         Intent intent = getIntent();
         if(intent != null) {
-            String name = intent.getStringExtra("name");
-            String date = intent.getStringExtra("date");
-            Toast.makeText(getApplicationContext(),name,Toast.LENGTH_LONG).show();
-         //   tasks.add(new Task(new ArrayList<Task>(),name,Calendar.getInstance().getTime(),new Date(date),Color.BLUE));
+            Bundle extras = getIntent().getExtras();
+            if (extras != null) {
+                String name = intent.getStringExtra("nameTask");
+                String dateStr = intent.getStringExtra("date");
+                Date date=null;
+
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                try {
+                    date = format.parse(dateStr);
+                    System.out.println(date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+                tasks.add(new Task(new ArrayList<Task>(),name,Calendar.getInstance().getTime(),date,Color.BLUE));
+                Save();
+            }
         }
        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.add_button);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent i = new Intent(view.getContext(), CreateTaskActivity.class);
                 startActivity(i);
             }
@@ -86,7 +110,31 @@ public class DisplayTask extends AppCompatActivity {
 
         });
     }
+public void Save()
+{
+    try {
+        FileOutputStream fos = openFileOutput("tasks", Context.MODE_PRIVATE);
+        ObjectOutputStream os = new ObjectOutputStream(fos);
+        os.writeObject(tasks);
+        os.close();
+        fos.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
 
+}
+public void Read()
+{
+try {
+    FileInputStream fis = openFileInput("tasks");
+    ObjectInputStream is = new ObjectInputStream(fis);
+    this.tasks =  (ArrayList<Task>) is.readObject();
+    is.close();
+    fis.close();
+}
+catch (Exception e){
+}
+}
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -117,4 +165,10 @@ public class DisplayTask extends AppCompatActivity {
         tasks.add(new Task(new ArrayList<Task>(),"Finish dat project", "", Calendar.getInstance().getTime(),Calendar.getInstance().getTime(), Color.BLUE));
 
     }
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+    }
 }
+
