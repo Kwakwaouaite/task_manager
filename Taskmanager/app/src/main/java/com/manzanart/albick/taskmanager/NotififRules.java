@@ -7,8 +7,24 @@ import android.app.Notification;
  */
 
 class NotififRules {
-    private boolean isProportional;
+    public boolean isProportional() {
+        return isProportional;
+    }
 
+    public void setProportional(boolean proportional) {
+        isProportional = proportional;
+    }
+
+    public float getValue() {
+        return value;
+    }
+
+    public void setValue(float value) {
+        this.value = value;
+    }
+
+    private boolean isProportional;
+    private float value;
     public void createNotification()
     {
    /* Notification.Builder builder = new Notification.Builder(this)

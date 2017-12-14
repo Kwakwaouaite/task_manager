@@ -27,6 +27,14 @@ public class Task implements  Serializable{
     private boolean displayed;
 
 
+    public ArrayList<NotififRules> getRules() {
+        return rules;
+    }
+
+    public void setRules(ArrayList<NotififRules> rules) {
+        this.rules = rules;
+    }
+
     private ArrayList<NotififRules> rules;
 
     public Task(ArrayList<Task> subTasks, String name,String description, Date startingDate, Date endingDate, int color) {

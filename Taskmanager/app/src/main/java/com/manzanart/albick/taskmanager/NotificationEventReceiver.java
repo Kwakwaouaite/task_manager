@@ -22,7 +22,30 @@ public class NotificationEventReceiver extends WakefulBroadcastReceiver {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent alarmIntent = getStartPendingIntent(context,task);
        //on crée le pendingIntent qu'il faut
-        alarmManager.set(AlarmManager.RTC_WAKEUP,getTriggerAt(dateTrigger),alarmIntent);
+
+       float dateTri=0;
+        Calendar calendarEnding = Calendar.getInstance();
+        calendarEnding.setTime(task.getEndingDate());
+        //calendar.add(Calendar.HOUR, NOTIFICATIONS_INTERVAL_IN_HOURS);
+        long cEnding=calendarEnding.getTimeInMillis();
+
+
+        Calendar calendarBeginning = Calendar.getInstance();
+        calendarBeginning.setTime(task.getStartingDate());
+        //calendar.add(Calendar.HOUR, NOTIFICATIONS_INTERVAL_IN_HOURS);
+        long cStarting=calendarEnding.getTimeInMillis();
+
+        if(task.getRules().size()>0 && task.getRules().get(0).isProportional())
+        {
+
+
+            dateTri=cStarting+ cEnding-cStarting *task.getRules().get(0).getValue();
+        }
+        else if (task.getRules().size()>0 && !task.getRules().get(0).isProportional())
+        {
+        dateTri=cEnding-task.getRules().get(0).getValue();
+        }
+        alarmManager.set(AlarmManager.RTC_WAKEUP,(long)(dateTri),alarmIntent);
                 }
 
     @Override
@@ -51,7 +74,7 @@ public class NotificationEventReceiver extends WakefulBroadcastReceiver {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(now);
         //calendar.add(Calendar.HOUR, NOTIFICATIONS_INTERVAL_IN_HOURS);
-        long tm=calendar.getTimeInMillis()+5000;
+        long tm=calendar.getTimeInMillis();
         return tm;
     }
 
