@@ -44,9 +44,12 @@ public class DisplayTask extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        genererTasks();
-        Read();
-        NotificationEventReceiver.setupAlarm(getApplicationContext());
+        tasks=Read(getApplicationContext());
+        if(tasks==null) {
+            genererTasks();
+        Save();
+        }
+        NotificationEventReceiver.setupAlarm(getApplicationContext(),Calendar.getInstance().getTime(),tasks.get(0));
         Intent intent = getIntent();
         if(intent != null) {
             Bundle extras = getIntent().getExtras();
@@ -142,17 +145,19 @@ public void Save()
     }
 
 }
-public void Read()
+public static ArrayList<Task> Read(Context ctx)
 {
 try {
-    FileInputStream fis = openFileInput("tasks");
+    FileInputStream fis = ctx.openFileInput("tasks");
     ObjectInputStream is = new ObjectInputStream(fis);
-    this.tasks =  (ArrayList<Task>) is.readObject();
+    ArrayList<Task> taskis =  (ArrayList<Task>) is.readObject();
     is.close();
     fis.close();
+    return taskis;
 }
 catch (Exception e){
 }
+return null;
 }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

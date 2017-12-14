@@ -9,6 +9,8 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 /**
  * Created by 4223 on 08/12/2017.
  */
@@ -41,7 +43,10 @@ public class NotificationIntentService extends IntentService {
         try {
             String action = intent.getAction();
             if (ACTION_START.equals(action)) {
-                processStartNotification();
+                if (intent.getExtras() != null) {
+                   int hash= intent.getIntExtra("Task", 0);
+                    processStartNotification(hash);
+                }
             }
             if (ACTION_DELETE.equals(action)) {
                 processDeleteNotification(intent);
@@ -55,24 +60,38 @@ public class NotificationIntentService extends IntentService {
         // Log something?
     }
 
-    private void processStartNotification() {
+    private void processStartNotification(int hash) {
         // Do something. For example, fetch fresh data from backend to create a rich notification?
+        ArrayList<Task> liste = DisplayTask.Read(getApplicationContext());
 
-        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setContentTitle("Scheduled Notification")
-                .setAutoCancel(true)
-                .setColor(getResources().getColor(R.color.colorAccent))
-                .setContentText("This notification has been triggered by Notification Service")
-                .setSmallIcon(R.drawable.notification);
+        int i = 0;
+        Task taskfound = null;
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                NOTIFICATION_ID,
-                new Intent(this, DisplayTask.class),
-                PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(pendingIntent);
-        builder.setDeleteIntent(NotificationEventReceiver.getDeleteIntent(this));
+        while (taskfound == null && i < liste.size()) {
+            if (liste.get(i).getId() == hash) {
+                taskfound = liste.get(i);
+            }
+            i++;
+        }
+        if (taskfound == null) {
+            System.out.println("tache non retrouvée!");
+        } else {
+            final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+            builder.setContentTitle(taskfound.getName())
+                    .setAutoCancel(true)
+                    .setColor(getResources().getColor(R.color.colorAccent))
+                    .setContentText("This notification has been triggered by Notification Service")
+                    .setSmallIcon(R.drawable.notification);
 
-        final NotificationManager manager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(NOTIFICATION_ID, builder.build());
+            PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                    NOTIFICATION_ID,
+                    new Intent(this, DisplayTask.class),
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setContentIntent(pendingIntent);
+            builder.setDeleteIntent(NotificationEventReceiver.getDeleteIntent(this));
+
+            final NotificationManager manager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+            manager.notify(NOTIFICATION_ID, builder.build());
+        }
     }
 }

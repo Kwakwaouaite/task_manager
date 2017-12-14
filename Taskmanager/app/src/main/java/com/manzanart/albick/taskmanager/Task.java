@@ -12,8 +12,25 @@ import java.util.Date;
 
 
 public class Task implements  Serializable{
-    public Task(ArrayList<Task> subTasks, String name,String description, Date startingDate, Date endingDate, int color) {
+    public int getId() {
+        return id;
+    }
 
+    private int id;
+    private ArrayList<Task> subTasks;
+    private String name;
+    private Date startingDate;
+    private Date endingDate;
+    private int color;
+
+    private String description;
+    private boolean displayed;
+
+
+    private ArrayList<NotififRules> rules;
+
+    public Task(ArrayList<Task> subTasks, String name,String description, Date startingDate, Date endingDate, int color) {
+        this.id=hashCode();
         this.subTasks = subTasks;
         this.name = name;
         this.startingDate = startingDate;
@@ -28,6 +45,7 @@ public class Task implements  Serializable{
         return subTasks;
 
     }
+
 
     public void setSubTasks(ArrayList<Task> subTasks) {
         this.subTasks = subTasks;
@@ -67,18 +85,6 @@ public class Task implements  Serializable{
     }
 
     public String getDescription() { return description; }
-
-    private ArrayList<Task> subTasks;
-    private String name;
-    private Date startingDate;
-    private Date endingDate;
-    private int color;
-
-    private String description;
-    private boolean displayed;
-
-
-    private ArrayList<NotififRules> rules;
 
     public int getColor() {
         return color;

@@ -18,15 +18,17 @@ public class NotificationEventReceiver extends WakefulBroadcastReceiver {
     private static final String ACTION_START_NOTIFICATION_SERVICE = "ACTION_START_NOTIFICATION_SERVICE";
     private static final String ACTION_DELETE_NOTIFICATION = "ACTION_DELETE_NOTIFICATION";
 
-    public static void setupAlarm(Context context) {
+    public static void setupAlarm(Context context,Date dateTrigger,Task task) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        PendingIntent alarmIntent = getStartPendingIntent(context); //on crée le pendingIntent qu'il faut
-        alarmManager.set(AlarmManager.RTC_WAKEUP,getTriggerAt(new Date()),alarmIntent);//TODO modifieer la date pour correspondre au set de regle
+        PendingIntent alarmIntent = getStartPendingIntent(context,task);
+       //on crée le pendingIntent qu'il faut
+        alarmManager.set(AlarmManager.RTC_WAKEUP,getTriggerAt(dateTrigger),alarmIntent);
                 }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
+
         Intent serviceIntent = null;
         if (ACTION_START_NOTIFICATION_SERVICE.equals(action)) {
             Log.i(getClass().getSimpleName(), "onReceive from alarm, starting notification service");
@@ -34,10 +36,14 @@ public class NotificationEventReceiver extends WakefulBroadcastReceiver {
         } else if (ACTION_DELETE_NOTIFICATION.equals(action)) {
             Log.i(getClass().getSimpleName(), "onReceive delete notification action, starting notification service to handle delete");
             serviceIntent = NotificationIntentService.createIntentDeleteNotification(context);
+
         }
 
         if (serviceIntent != null) {
+        int hashValue=intent.getIntExtra("Task",0);
+        serviceIntent.putExtra("Task",hashValue);
             startWakefulService(context, serviceIntent);
+
         }
     }
 
@@ -45,13 +51,14 @@ public class NotificationEventReceiver extends WakefulBroadcastReceiver {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(now);
         //calendar.add(Calendar.HOUR, NOTIFICATIONS_INTERVAL_IN_HOURS);
-        long tm=calendar.getTimeInMillis()+10000;
+        long tm=calendar.getTimeInMillis()+5000;
         return tm;
     }
 
-    private static PendingIntent getStartPendingIntent(Context context) {
+    private static PendingIntent getStartPendingIntent(Context context,Task task) {
         Intent intent = new Intent(context, NotificationEventReceiver.class);
         intent.setAction(ACTION_START_NOTIFICATION_SERVICE);
+        intent.putExtra("Task",task.getId());
         return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
