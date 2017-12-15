@@ -18,28 +18,31 @@ public class NotificationEventReceiver extends WakefulBroadcastReceiver {
     private static final String ACTION_START_NOTIFICATION_SERVICE = "ACTION_START_NOTIFICATION_SERVICE";
     private static final String ACTION_DELETE_NOTIFICATION = "ACTION_DELETE_NOTIFICATION";
 
-    public static void setupAlarm(Context context,Date dateTrigger,Task task) {
+    public static void setupAlarm(Context context,Task task) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent alarmIntent = getStartPendingIntent(context,task);
        //on crée le pendingIntent qu'il faut
 
        float dateTri=0;
+
+
         Calendar calendarEnding = Calendar.getInstance();
         calendarEnding.setTime(task.getEndingDate());
         //calendar.add(Calendar.HOUR, NOTIFICATIONS_INTERVAL_IN_HOURS);
-        long cEnding=calendarEnding.getTimeInMillis();
+        long cEnding=calendarEnding.getTimeInMillis()+10000; //TODO remove 10000 after tests
 
 
         Calendar calendarBeginning = Calendar.getInstance();
         calendarBeginning.setTime(task.getStartingDate());
         //calendar.add(Calendar.HOUR, NOTIFICATIONS_INTERVAL_IN_HOURS);
-        long cStarting=calendarEnding.getTimeInMillis();
+        long cStarting=calendarBeginning.getTimeInMillis();
 
         if(task.getRules().size()>0 && task.getRules().get(0).isProportional())
         {
 
 
-            dateTri=cStarting+ cEnding-cStarting *task.getRules().get(0).getValue();
+            dateTri=cStarting+ (cEnding-cStarting) *task.getRules().get(0).getValue();
+
         }
         else if (task.getRules().size()>0 && !task.getRules().get(0).isProportional())
         {

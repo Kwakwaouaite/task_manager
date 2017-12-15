@@ -37,14 +37,14 @@ public class Task implements  Serializable{
 
     private ArrayList<NotififRules> rules;
 
-    public Task(ArrayList<Task> subTasks, String name,String description, Date startingDate, Date endingDate, int color) {
+    public Task(ArrayList<Task> subTasks, String name,String description, Date startingDate, Date endingDate, int color,ArrayList<NotififRules> rules) {
         this.id=hashCode();
         this.subTasks = subTasks;
         this.name = name;
         this.startingDate = startingDate;
         this.endingDate = endingDate;
         this.color= color;
-
+        this.rules=rules;
         this.description = description;
         this.displayed=false;
     }

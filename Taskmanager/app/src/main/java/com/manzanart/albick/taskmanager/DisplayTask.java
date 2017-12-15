@@ -47,9 +47,11 @@ public class DisplayTask extends AppCompatActivity {
         tasks=Read(getApplicationContext());
         if(tasks==null) {
             genererTasks();
-        Save();
+
+
+            Save();
         }
-        NotificationEventReceiver.setupAlarm(getApplicationContext(),Calendar.getInstance().getTime(),tasks.get(0));
+        NotificationEventReceiver.setupAlarm(getApplicationContext(),tasks.get(0));
         Intent intent = getIntent();
         if(intent != null) {
             Bundle extras = getIntent().getExtras();
@@ -67,8 +69,9 @@ public class DisplayTask extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-
-                tasks.add(new Task(new ArrayList<Task>(),name,description,Calendar.getInstance().getTime(),date,Color.BLUE));
+                Task tasknew=new Task(new ArrayList<Task>(),name,description,Calendar.getInstance().getTime(),date,Color.BLUE,new ArrayList<NotififRules>());
+                tasknew.getRules().add(new NotififRules(true,(float)0.5));
+                tasks.add(tasknew);
                 Save();
             }
         }
@@ -185,8 +188,13 @@ return null;
 
     private void genererTasks(){
         tasks=new ArrayList<Task>();
-        tasks.add(new Task(new ArrayList<Task>(),"Get the F up", "aaaa", Calendar.getInstance().getTime(),Calendar.getInstance().getTime(), Color.BLUE));
-        tasks.add(new Task(new ArrayList<Task>(),"Finish dat project", "", Calendar.getInstance().getTime(),Calendar.getInstance().getTime(), Color.BLUE));
+
+        tasks.add(new Task(new ArrayList<Task>(),"Get the F up", "aaaa", Calendar.getInstance().getTime(),Calendar.getInstance().getTime(),
+                Color.BLUE,new ArrayList<NotififRules>()));
+        tasks.add(new Task(new ArrayList<Task>(),"Finish dat project", "", Calendar.getInstance().getTime(),Calendar.getInstance().getTime(),
+                Color.BLUE,new ArrayList<NotififRules>()));
+        tasks.get(0).getRules().add(new NotififRules(false,1000));
+         tasks.get(1).getRules().add(new NotififRules(true,(float)(0.5)));
     }
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {

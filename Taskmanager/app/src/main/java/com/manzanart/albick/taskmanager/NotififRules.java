@@ -23,6 +23,11 @@ class NotififRules {
         this.value = value;
     }
 
+    public NotififRules(boolean isProportional, float value) {
+        this.isProportional = isProportional;
+        this.value = value;
+    }
+
     private boolean isProportional;
     private float value;
     public void createNotification()
