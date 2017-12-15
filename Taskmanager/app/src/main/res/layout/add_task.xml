@@ -31,17 +31,66 @@
         android:id="@+id/submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/datePicker"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="1dp"
+        android:orientation="horizontal"
+        android:layout_marginBottom="55dp"
         android:text="submit" />
 
-    <DatePicker
-        android:id="@+id/datePicker"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+    <RadioGroup
+        android:id="@+id/rg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/editDescription"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
+        android:padding="15dp">
 
+        <RadioButton
+            android:id="@+id/notificationRelative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+            android:text="Pourcentage" />
+
+        <RadioButton
+            android:id="@+id/notificationAbsolute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:paddingRight="10dp"
+            android:text="Temps fixe" />
+    </RadioGroup>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/pickdateandhour"
+        android:layout_alignBottom="@+id/pickdateandhour"
+        android:layout_alignLeft="@+id/editText3"
+        android:layout_alignStart="@+id/editText3"
+        android:onClick="showDatePickerDialog"
+        android:text="pick date" />
+
+    <Button
+        android:id="@+id/pickdateandhour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/rg"
+        android:layout_alignRight="@+id/rg"
+        android:layout_below="@+id/editText3"
+        android:layout_marginTop="34dp"
+        android:onClick="showTimePickerDialog"
+        android:text="Pick hour" />
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:ems="10"
+        android:inputType="number" />
 
 </RelativeLayout>

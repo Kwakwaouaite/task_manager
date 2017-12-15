@@ -59,6 +59,8 @@ public class DisplayTask extends AppCompatActivity {
                 String name = intent.getStringExtra("nameTask");
                 String description = intent.getStringExtra("descriptionTask");
                 String dateStr = intent.getStringExtra("date");
+                float valueRule= Float.parseFloat(intent.getStringExtra("valueRule"));
+                boolean isPercent=intent.getBooleanExtra("isPercent",true);
                 Date date=null;
 
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -70,7 +72,7 @@ public class DisplayTask extends AppCompatActivity {
                 }
 
                 Task tasknew=new Task(new ArrayList<Task>(),name,description,Calendar.getInstance().getTime(),date,Color.BLUE,new ArrayList<NotififRules>());
-                tasknew.getRules().add(new NotififRules(true,(float)0.5));
+                tasknew.getRules().add(new NotififRules(isPercent,valueRule));
                 tasks.add(tasknew);
                 Save();
             }

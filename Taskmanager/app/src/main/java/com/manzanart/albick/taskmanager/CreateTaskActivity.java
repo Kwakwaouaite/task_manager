@@ -1,5 +1,6 @@
 package com.manzanart.albick.taskmanager;
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,7 +10,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
 
+import java.security.SecureRandomSpi;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,35 +28,50 @@ import java.util.List;
 
     public class CreateTaskActivity extends AppCompatActivity {
 
+public static int year;
+    public static int month;
+    public static int day;
 
+public static int hour;
+public static int minutes;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.add_task);
             Button button = (Button) findViewById(R.id.submit);
             final EditText nameTask   = (EditText)findViewById(R.id.editText);
-            final Date date = getDateFromDatePicker((DatePicker)findViewById(R.id.datePicker));
             final EditText descriptionTask = (EditText)findViewById(R.id.editDescription);
-
+            final RadioButton radioPourcent= (RadioButton) findViewById(R.id.notificationRelative);
+            final EditText valueRule=(EditText) findViewById(R.id.editText3);
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(view.getContext(), DisplayTask.class);
-
+//TODO mettre une sécurité sur les nombres
                     Bundle bundle = new Bundle();
+                    bundle.putBoolean("isPercent",radioPourcent.isChecked());
                     bundle.putString("nameTask", nameTask.getText().toString());
                     bundle.putString("descriptionTask", descriptionTask.getText().toString());
                     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    bundle.putSerializable("date", formatter.format(date));
-
+                    bundle.putString("date",year+"-"+month+"-"+day+" "+hour+":"+minutes+"00" );
+                    bundle.putString("valueRule",valueRule.getText().toString());
                     intent.putExtras(bundle);
                     startActivity(intent);
 
                 }
             });
              }
-    /**
+    public void showTimePickerDialog(View v) {
+        DialogFragment newFragment = new TimePickerFragment();
+        newFragment.show(getFragmentManager(), "timePicker");
+
+    }
+
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getFragmentManager(), "datePicker");
+    }    /**
      *
      * @param datePicker
      * @return a java.util.Date
