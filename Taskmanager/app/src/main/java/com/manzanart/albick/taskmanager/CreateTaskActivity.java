@@ -58,7 +58,7 @@ public static int minutes;
                     bundle.putString("valueRule",valueRule.getText().toString());
                     intent.putExtras(bundle);
                     startActivity(intent);
-
+                    finish();
                 }
             });
              }
