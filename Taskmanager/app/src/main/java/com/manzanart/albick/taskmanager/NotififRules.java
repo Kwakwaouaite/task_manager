@@ -2,11 +2,13 @@ package com.manzanart.albick.taskmanager;
 
 import android.app.Notification;
 
+import java.io.Serializable;
+
 /**
  * Created by 4223 on 08/12/2017.
  */
 
-class NotififRules {
+class NotififRules implements Serializable{
     public boolean isProportional() {
         return isProportional;
     }
