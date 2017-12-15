@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,7 +37,7 @@ public class DisplayTask extends AppCompatActivity {
 
     private ListView mListView;
     private ArrayList<Task> tasks;
-
+    TaskAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +56,7 @@ public class DisplayTask extends AppCompatActivity {
         Intent intent = getIntent();
         if(intent != null) {
             Bundle extras = getIntent().getExtras();
-            if (extras != null) {
+            if (extras != null && intent.getStringExtra("date")!=null) {
                 String name = intent.getStringExtra("nameTask");
                 String description = intent.getStringExtra("descriptionTask");
                 String dateStr = intent.getStringExtra("date");
@@ -87,7 +88,7 @@ public class DisplayTask extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.list);
 
 
-        final TaskAdapter adapter = new TaskAdapter(DisplayTask.this, tasks);
+        this.adapter = new TaskAdapter(DisplayTask.this, tasks);
         mListView.setAdapter(adapter);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -101,6 +102,8 @@ public class DisplayTask extends AppCompatActivity {
 
                 // ListView Clicked item value
                 //String  itemValue    = (String) mListView.getItemAtPosition(position);
+
+                Log.d("tag", view.getTag().getClass().getName());
 
                 Task task = tasks.get((int) id);
                 task.switchDisplay();
@@ -133,6 +136,7 @@ public class DisplayTask extends AppCompatActivity {
             }
 
         });
+
     }
 
 public void Save()
@@ -199,6 +203,17 @@ return null;
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
+
+    }
+
+    public void removeClickHandler(View v){
+        LinearLayout vwParentRow = (LinearLayout)v.getParent();
+        TextView child = (TextView)vwParentRow.getChildAt(0);
+        Button btnChild = (Button)vwParentRow.getChildAt(1);
+        int position = Integer.parseInt((String)btnChild.getContentDescription());
+        tasks.remove(position);
+        Save();
+        adapter.notifyDataSetChanged();
 
     }
 }

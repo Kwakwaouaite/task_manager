@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,6 +38,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
 
                 viewHolder.text = (TextView) convertView.findViewById(R.id.task_name);
                 viewHolder.description = convertView.findViewById(R.id.description);
+                viewHolder.button = convertView.findViewById(R.id.remove_button);
                 //viewHolder.image = (ImageView) convertView.findViewById(R.id.image);
                 convertView.setTag(viewHolder);
             }
@@ -47,12 +49,15 @@ public class TaskAdapter extends ArrayAdapter<Task> {
             //il ne reste plus qu'à remplir notre vue
 
             viewHolder.text.setText(task.getName());
+            viewHolder.button.setContentDescription(Integer.toString(position));
 
             if (task.isDisplayed()) {
                 viewHolder.description.setText( task.getDescription());
+                viewHolder.button.setVisibility(View.VISIBLE);
             }
             else {
-                viewHolder.description.setText(null);}
+                viewHolder.description.setText(null);
+                viewHolder.button.setVisibility(View.GONE);}
             //viewHolder.image.setImageDrawable(new ColorDrawable(task.getColor()));
 
             return convertView;
@@ -63,6 +68,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
             public TextView text;
             public ImageView image;
             public TextView description;
+            public Button button;
         }
     }
 
