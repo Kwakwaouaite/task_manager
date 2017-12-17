@@ -1,6 +1,7 @@
 package com.manzanart.albick.taskmanager;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class Task implements  Serializable{
         this.name = name;
         this.startingDate = startingDate;
         this.endingDate = endingDate;
+        //Log.d("Ending date", endingDate.toString());
         this.color= color;
         this.rules=rules;
         this.description = description;
@@ -100,6 +102,29 @@ public class Task implements  Serializable{
 
     public void setColor(int color) {
         this.color = color;
+    }
+
+
+    // Return a String corresponding to the time left, it adapt if there is function of the span left
+    public String getTimeLeft(){
+        long today = System.currentTimeMillis();
+        if ( this.getEndingDate() != null) {
+            long timestamp = this.getEndingDate().getTime();
+            int left = (int) (timestamp - today);
+            Log.d("Timestamp", Integer.toString((int) timestamp));
+            Log.d("today", Integer.toString((int) today));
+            Log.d("Left", Integer.toString(left));
+            if (Math.abs(left) >= (1000 * 3600 * 24)) {
+                int daysLeft =  left / (1000 * 3600 * 24);
+                return (Integer.toString(daysLeft) + " days left !");
+            } else if (Math.abs(left) >= (1000 * 3600)) {
+                int hoursLeft = left / (1000 * 3600 * 24);
+                return (Integer.toString(hoursLeft) + " hours left !");
+            }
+            int minutesLeft = left / (60 * 1000);
+            return (Integer.toString(minutesLeft) + " minutes left !");
+        }
+        return ("Waiting");
     }
 
 

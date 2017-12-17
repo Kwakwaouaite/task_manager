@@ -41,7 +41,7 @@ public class DisplayTask extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_display_task);
+        setContentView(R.layout.activity_display_task);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -65,9 +65,9 @@ public class DisplayTask extends AppCompatActivity {
                 Date date=null;
 
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Log.d("Date", dateStr);
                 try {
                     date = format.parse(dateStr);
-                    System.out.println(date);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

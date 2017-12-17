@@ -39,16 +39,19 @@ public class TaskAdapter extends ArrayAdapter<Task> {
                 viewHolder.text = (TextView) convertView.findViewById(R.id.task_name);
                 viewHolder.description = convertView.findViewById(R.id.description);
                 viewHolder.button = convertView.findViewById(R.id.remove_button);
+                viewHolder.timeLeft = convertView.findViewById(R.id.time_left);
+
                 //viewHolder.image = (ImageView) convertView.findViewById(R.id.image);
                 convertView.setTag(viewHolder);
             }
 
             //getItem(position) va récupérer l'item [position] de la List<Tasks> tasks
             Task task = getItem(position);
+            Log.d("Name", task.getName());
 
             //il ne reste plus qu'à remplir notre vue
-
             viewHolder.text.setText(task.getName());
+            viewHolder.timeLeft.setText(task.getTimeLeft());
             viewHolder.button.setContentDescription(Integer.toString(position));
 
             if (task.isDisplayed()) {
@@ -67,6 +70,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
 
             public TextView text;
             public ImageView image;
+            public TextView timeLeft;
             public TextView description;
             public Button button;
         }
