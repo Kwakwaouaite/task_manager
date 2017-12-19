@@ -52,6 +52,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
 
             //il ne reste plus qu'à remplir notre vue
             viewHolder.text.setText(task.getName());
+            viewHolder.description.setText(task.getDescription());
             viewHolder.timeLeft.setText(task.getTimeLeft());
             viewHolder.button.setContentDescription(Integer.toString(position));
 

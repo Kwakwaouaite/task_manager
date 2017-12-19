@@ -54,7 +54,6 @@ public class DisplayTask extends AppCompatActivity {
 
             Save();
         }
-        Collections.sort(tasks);
 
 
           Intent intent = getIntent();
@@ -82,6 +81,8 @@ public class DisplayTask extends AppCompatActivity {
                 Save();
             }
         }
+
+        Collections.sort(tasks);
         for(Task task :tasks)
         {
             if(task.getEndingDate().getTime()>System.currentTimeMillis() && !task.isNotificationThrown())
