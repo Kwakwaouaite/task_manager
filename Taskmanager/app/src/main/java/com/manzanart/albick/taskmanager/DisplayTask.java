@@ -47,6 +47,8 @@ public class DisplayTask extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         tasks=Read(getApplicationContext());
+        Collections.sort(tasks);
+
         if(tasks==null) {
             genererTasks();
 
@@ -76,7 +78,6 @@ public class DisplayTask extends AppCompatActivity {
                 Task tasknew=new Task(new ArrayList<Task>(),name,description,Calendar.getInstance().getTime(),date,Color.BLUE,new ArrayList<NotififRules>());
                 tasknew.getRules().add(new NotififRules(isPercent,valueRule));
                 tasks.add(tasknew);
-                Collections.sort(tasks);
                 Save();
             }
         }

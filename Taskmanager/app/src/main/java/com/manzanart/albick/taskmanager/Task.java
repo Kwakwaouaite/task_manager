@@ -160,9 +160,17 @@ public class Task implements  Serializable,Comparable{
     public int compareTo(@NonNull Object o) {
         if (o.getClass()==Task.class)
         {
-            return (int) (((Task) o).endingDate.getTime()-this.endingDate.getTime());
+            Task tache=(Task) o;
+
+            if(tache.endingDate.getTime()>this.endingDate.getTime())
+
+            return -1;
         }
-        else return -1;
+        else
+        {
+            return 1;
+        }
+    return 1;
     }
 
 }
