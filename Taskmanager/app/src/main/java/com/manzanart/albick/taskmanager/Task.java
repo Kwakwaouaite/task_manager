@@ -111,7 +111,7 @@ public class Task implements  Serializable{
         long today = System.currentTimeMillis();
         if ( this.getEndingDate() != null) {
             long end = this.getEndingDate().getTime();
-            int left = (int) (end - today);
+            long left = (end - today);
             Date endDate = new Date(end);
             /*
             Log.d("End", endDate.toString());
@@ -122,14 +122,14 @@ public class Task implements  Serializable{
             */
 
             if (Math.abs(left) >= (1000 * 3600 * 24)) {
-                int daysLeft =  left / (1000 * 3600 * 24);
-                return (Integer.toString(daysLeft) + " days left !");
+                long daysLeft =  left / (1000 * 3600 * 24);
+                return (Long.toString(daysLeft) + " days left !");
             } else if (Math.abs(left) >= (1000 * 3600)) {
-                int hoursLeft = left / (1000 * 3600);
-                return (Integer.toString(hoursLeft) + " hours left !");
+                long hoursLeft = left / (1000 * 3600);
+                return (Long.toString(hoursLeft) + " hours left !");
             }
-            int minutesLeft = left / (60 * 1000);
-            return (Integer.toString(minutesLeft) + " minutes left !");
+            long minutesLeft = left / (60 * 1000);
+            return (Long.toString(minutesLeft) + " minutes left !");
         }
         return ("Waiting");
     }
