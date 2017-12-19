@@ -30,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -75,6 +76,7 @@ public class DisplayTask extends AppCompatActivity {
                 Task tasknew=new Task(new ArrayList<Task>(),name,description,Calendar.getInstance().getTime(),date,Color.BLUE,new ArrayList<NotififRules>());
                 tasknew.getRules().add(new NotififRules(isPercent,valueRule));
                 tasks.add(tasknew);
+                Collections.sort(tasks);
                 Save();
             }
         }

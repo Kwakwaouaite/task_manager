@@ -1,6 +1,7 @@
 package com.manzanart.albick.taskmanager;
 
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 
@@ -13,7 +14,7 @@ import java.util.Date;
  */
 
 
-public class Task implements  Serializable{
+public class Task implements  Serializable,Comparable{
     public int getId() {
         return id;
     }
@@ -154,5 +155,14 @@ public class Task implements  Serializable{
         }
     }
 
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        if (o.getClass()==Task.class)
+        {
+            return (int) (((Task) o).endingDate.getTime()-this.endingDate.getTime());
+        }
+        else return -1;
+    }
 
 }
