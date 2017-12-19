@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
@@ -77,12 +78,17 @@ public class NotificationIntentService extends IntentService {
             System.out.println("tache non retrouvée!");
         } else {
             final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+
             builder.setContentTitle(taskfound.getName())
                     .setAutoCancel(true)
                     .setColor(getResources().getColor(R.color.colorAccent))
                     .setContentText(taskfound.getDescription())
-                    .setSmallIcon(R.drawable.notification);
+                    .setSmallIcon(R.drawable.notification)
+                    .setVibrate(new long[]{0, 500, 110, 500, 110, 450, 110, 200, 110, 170, 40, 450, 110, 200, 110, 170, 40, 500});
+            builder.setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 });
 
+            Vibrator v = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+            v.vibrate(500);
             PendingIntent pendingIntent = PendingIntent.getActivity(this,
                     NOTIFICATION_ID,
                     new Intent(this, DisplayTask.class),
