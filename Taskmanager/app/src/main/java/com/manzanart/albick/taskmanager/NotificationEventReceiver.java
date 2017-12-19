@@ -41,7 +41,7 @@ public class NotificationEventReceiver extends WakefulBroadcastReceiver {
         {
 
 
-            dateTri=cStarting+ (cEnding-cStarting) *task.getRules().get(0).getValue();
+            dateTri=cStarting+ (cEnding-cStarting) *task.getRules().get(0).getValue()/100;
 
         }
         else if (task.getRules().size()>0 && !task.getRules().get(0).isProportional())

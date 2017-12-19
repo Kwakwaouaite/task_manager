@@ -29,6 +29,16 @@ public class Task implements  Serializable,Comparable{
     private String description;
     private boolean displayed;
 
+    public boolean isNotificationThrown() {
+        return notificationThrown;
+    }
+
+    public void setNotificationThrown(boolean notificationThrown) {
+        this.notificationThrown = notificationThrown;
+    }
+
+    private boolean notificationThrown=false;
+
 
     public ArrayList<NotififRules> getRules() {
         return rules;
@@ -51,6 +61,7 @@ public class Task implements  Serializable,Comparable{
         this.rules=rules;
         this.description = description;
         this.displayed=false;
+
     }
 
     public ArrayList<Task> getSubTasks() {

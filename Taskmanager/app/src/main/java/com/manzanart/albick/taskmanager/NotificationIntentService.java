@@ -80,7 +80,7 @@ public class NotificationIntentService extends IntentService {
             builder.setContentTitle(taskfound.getName())
                     .setAutoCancel(true)
                     .setColor(getResources().getColor(R.color.colorAccent))
-                    .setContentText("This notification has been triggered by Notification Service")
+                    .setContentText(taskfound.getDescription())
                     .setSmallIcon(R.drawable.notification);
 
             PendingIntent pendingIntent = PendingIntent.getActivity(this,

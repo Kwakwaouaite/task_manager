@@ -47,7 +47,6 @@ public class DisplayTask extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         tasks=Read(getApplicationContext());
-        Collections.sort(tasks);
 
         if(tasks==null) {
             genererTasks();
@@ -55,8 +54,10 @@ public class DisplayTask extends AppCompatActivity {
 
             Save();
         }
-        NotificationEventReceiver.setupAlarm(getApplicationContext(),tasks.get(0));
-        Intent intent = getIntent();
+        Collections.sort(tasks);
+
+
+          Intent intent = getIntent();
         if(intent != null) {
             Bundle extras = getIntent().getExtras();
             if (extras != null && intent.getStringExtra("date")!=null) {
@@ -80,6 +81,16 @@ public class DisplayTask extends AppCompatActivity {
                 tasks.add(tasknew);
                 Save();
             }
+        }
+        for(Task task :tasks)
+        {
+            if(task.getEndingDate().getTime()>System.currentTimeMillis() && !task.isNotificationThrown())
+            {
+                NotificationEventReceiver.setupAlarm(getApplicationContext(),task);
+                task.setNotificationThrown(true);
+            }
+
+
         }
 
         // Defini l'action du bouton ajouter
