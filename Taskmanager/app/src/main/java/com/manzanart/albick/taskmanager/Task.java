@@ -146,10 +146,12 @@ public class Task implements  Serializable,Comparable{
             Log.d("end", Long.toString(end));
             if (today > end) {
                 view.all.setBackgroundColor(Color.argb(100, 200, 10, 10));
+                view.timeLeft.setTextColor(0xff000000);
             }
             else{
-                float percent = (1-(end - today))/(end - start + 0.0000000001f);
-                view.timeLeft.setTextColor(Color.argb((int)(100*percent),200,50,50));
+                float percent = 1-((end - today)/(end - start + 0.0000000001f));
+                view.timeLeft.setTextColor(Color.argb(255,(int) (percent * 200) + 30, 30,30));
+                view.all.setBackgroundColor(0);
             }
 
         }
