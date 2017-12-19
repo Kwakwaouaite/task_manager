@@ -29,7 +29,7 @@ public class NotificationEventReceiver extends WakefulBroadcastReceiver {
         Calendar calendarEnding = Calendar.getInstance();
         calendarEnding.setTime(task.getEndingDate());
         //calendar.add(Calendar.HOUR, NOTIFICATIONS_INTERVAL_IN_HOURS);
-        long cEnding=calendarEnding.getTimeInMillis()+10000; //TODO remove 10000 after tests
+        long cEnding=calendarEnding.getTimeInMillis(); 
 
 
         Calendar calendarBeginning = Calendar.getInstance();

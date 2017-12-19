@@ -55,7 +55,7 @@ public static int minutes;
                     bundle.putString("nameTask", nameTask.getText().toString());
                     bundle.putString("descriptionTask", descriptionTask.getText().toString());
                     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    bundle.putString("date",year+"-"+month+"-"+day+" "+hour+":"+minutes+":00" );
+                    bundle.putString("date",year+"-"+(month+1)+"-"+day+" "+hour+":"+minutes+":00" );
                     //Log.d("Creation", year+"-"+month+"-"+day+" "+hour+":"+minutes+"00");
                     bundle.putString("valueRule",valueRule.getText().toString());
                     intent.putExtras(bundle);
