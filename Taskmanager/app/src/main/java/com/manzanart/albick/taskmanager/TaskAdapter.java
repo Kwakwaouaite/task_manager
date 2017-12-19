@@ -36,12 +36,13 @@ public class TaskAdapter extends ArrayAdapter<Task> {
             if(viewHolder == null){
                 viewHolder = new TaskViewHolder();
 
-                viewHolder.text = (TextView) convertView.findViewById(R.id.task_name);
+                // Get all the children views of the row virw displayed
+                viewHolder.all = convertView.findViewById(R.id.all_row);
+                viewHolder.text = convertView.findViewById(R.id.task_name);
                 viewHolder.description = convertView.findViewById(R.id.description);
                 viewHolder.button = convertView.findViewById(R.id.remove_button);
                 viewHolder.timeLeft = convertView.findViewById(R.id.time_left);
 
-                //viewHolder.image = (ImageView) convertView.findViewById(R.id.image);
                 convertView.setTag(viewHolder);
             }
 
@@ -54,22 +55,24 @@ public class TaskAdapter extends ArrayAdapter<Task> {
             viewHolder.timeLeft.setText(task.getTimeLeft());
             viewHolder.button.setContentDescription(Integer.toString(position));
 
+            // Display additionnal information or not, when clicked
             if (task.isDisplayed()) {
-                viewHolder.description.setText( task.getDescription());
+                viewHolder.description.setVisibility(View.VISIBLE);
                 viewHolder.button.setVisibility(View.VISIBLE);
             }
             else {
-                viewHolder.description.setText(null);
+                viewHolder.description.setVisibility(View.GONE);
                 viewHolder.button.setVisibility(View.GONE);}
             //viewHolder.image.setImageDrawable(new ColorDrawable(task.getColor()));
+
+            task.setColorLeft(viewHolder);
 
             return convertView;
         }
 
-        private class TaskViewHolder{
-
+        public class TaskViewHolder{
+            public View all;
             public TextView text;
-            public ImageView image;
             public TextView timeLeft;
             public TextView description;
             public Button button;

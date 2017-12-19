@@ -78,7 +78,9 @@ public class DisplayTask extends AppCompatActivity {
                 Save();
             }
         }
-       FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.add_button);
+
+        // Defini l'action du bouton ajouter
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.add_button);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,24 +89,18 @@ public class DisplayTask extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        //Creer la liste de tache que l'on va afficher
         mListView = (ListView) findViewById(R.id.list);
-
-
         this.adapter = new TaskAdapter(DisplayTask.this, tasks);
         mListView.setAdapter(adapter);
-
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
-                // ListView Clicked item index
-                //int itemPosition     = position;
-
-                // ListView Clicked item value
-                //String  itemValue    = (String) mListView.getItemAtPosition(position);
-
+                // Affiche le nom de la tache dans la console
                 Log.d("tag", view.getTag().getClass().getName());
 
                 Task task = tasks.get((int) id);
@@ -113,27 +109,14 @@ public class DisplayTask extends AppCompatActivity {
                 String taskTitle = (String) task.getName();
                 
                 ViewGroup test = (ViewGroup) view;
-
-                /*
-                int b = test.getChildCount();
-                TextView desc = (TextView) test.getChildAt(1);
-
-                desc.setText("YO !");*/
-
-
-
-                //
-                /*if (tasks.get((int) id).getDescription() == null) {
-                    tasks.get((int) id).setDescription("Descriptionaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-                }
-                else{
-                tasks.get((int) id).setDescription(null);}*/
                 adapter.notifyDataSetChanged();
 
+                /*
                 // Show Alert
                 Toast.makeText(getApplicationContext(),
                         "Position :"+ id +"  ListItem : " + task.isDisplayed()  , Toast.LENGTH_LONG)
                         .show();
+                */
 
             }
 
@@ -195,12 +178,13 @@ return null;
     private void genererTasks(){
         tasks=new ArrayList<Task>();
 
+        // Fake tasks created if the list is empty
         tasks.add(new Task(new ArrayList<Task>(),"Get the F up", "aaaa", Calendar.getInstance().getTime(),Calendar.getInstance().getTime(),
                 Color.BLUE,new ArrayList<NotififRules>()));
         tasks.add(new Task(new ArrayList<Task>(),"Finish dat project", "", Calendar.getInstance().getTime(),Calendar.getInstance().getTime(),
                 Color.BLUE,new ArrayList<NotififRules>()));
         tasks.get(0).getRules().add(new NotififRules(false,1000));
-         tasks.get(1).getRules().add(new NotififRules(true,(float)(0.5)));
+        tasks.get(1).getRules().add(new NotififRules(true,(float)(0.5)));
     }
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
@@ -208,10 +192,10 @@ return null;
 
     }
 
+    // Handler to remove a task when the button is clicked on
     public void removeClickHandler(View v){
         LinearLayout vwParentRow = (LinearLayout)v.getParent();
-        TextView child = (TextView)vwParentRow.getChildAt(0);
-        Button btnChild = (Button)vwParentRow.getChildAt(1);
+        Button btnChild = (Button)vwParentRow.getChildAt(1);  // Find the view of the button
         int position = Integer.parseInt((String)btnChild.getContentDescription());
         tasks.remove(position);
         Save();

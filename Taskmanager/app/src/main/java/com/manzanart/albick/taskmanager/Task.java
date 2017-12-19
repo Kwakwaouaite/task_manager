@@ -2,6 +2,7 @@ package com.manzanart.albick.taskmanager;
 
 import android.graphics.Color;
 import android.util.Log;
+import android.view.View;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -105,26 +106,52 @@ public class Task implements  Serializable{
     }
 
 
-    // Return a String corresponding to the time left, it adapt if there is function of the span left
+    // Return a String corresponding to the time left, it adapt if there in function of the span left
     public String getTimeLeft(){
         long today = System.currentTimeMillis();
         if ( this.getEndingDate() != null) {
-            long timestamp = this.getEndingDate().getTime();
-            int left = (int) (timestamp - today);
+            long end = this.getEndingDate().getTime();
+            int left = (int) (end - today);
+            Date endDate = new Date(end);
+            /*
+            Log.d("End", endDate.toString());
             Log.d("Timestamp", Integer.toString((int) timestamp));
+            Log.d("today", (new Date(today)).toString());
             Log.d("today", Integer.toString((int) today));
             Log.d("Left", Integer.toString(left));
+            */
+
             if (Math.abs(left) >= (1000 * 3600 * 24)) {
                 int daysLeft =  left / (1000 * 3600 * 24);
                 return (Integer.toString(daysLeft) + " days left !");
             } else if (Math.abs(left) >= (1000 * 3600)) {
-                int hoursLeft = left / (1000 * 3600 * 24);
+                int hoursLeft = left / (1000 * 3600);
                 return (Integer.toString(hoursLeft) + " hours left !");
             }
             int minutesLeft = left / (60 * 1000);
             return (Integer.toString(minutesLeft) + " minutes left !");
         }
         return ("Waiting");
+    }
+
+    // Choose a color depending on the time left
+    public void setColorLeft(TaskAdapter.TaskViewHolder view){
+        long today = System.currentTimeMillis();
+        if ( this.getEndingDate() != null) {
+            long end = this.getEndingDate().getTime();
+            long start = this.getStartingDate().getTime();
+            Log.d("today", Long.toString( today));
+            Log.d("start", Long.toString( start));
+            Log.d("end", Long.toString(end));
+            if (today > end) {
+                view.all.setBackgroundColor(Color.argb(100, 200, 10, 10));
+            }
+            else{
+                float percent = (1-(end - today))/(end - start + 0.0000000001f);
+                view.timeLeft.setTextColor(Color.argb((int)(100*percent),200,50,50));
+            }
+
+        }
     }
 
 
